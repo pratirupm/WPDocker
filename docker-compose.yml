@@ -5,12 +5,12 @@ services:
     image: nginx:stable
     restart: always
     ports:
-      - "80:80"
-      - "443:443"
+      - "8080:80"
+      # - "443:443"
     volumes:
+      - ./nginx-dev:/etc/nginx/conf.d
       - wordpress:/var/www/html
-      - ./nginx-conf:/etc/nginx/conf.d
-      - ./ssl:/etc/ssl
+      # - ./ssl:/etc/ssl
   
   wordpress:
     image: wordpress:5.9.1-php8.1-fpm
