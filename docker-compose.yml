@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  webserver:
+    image: nginx:stable
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - wordpress:/var/www/html
+      - ./nginx-conf:/etc/nginx/conf.d
+      - ./ssl:/etc/ssl
+  
+  wordpress:
+    image: wordpress:5.9.1-php8.1-fpm
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - wordpress:/var/www/html
+
+volumes:
+  wordpress:
