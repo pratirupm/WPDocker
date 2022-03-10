@@ -1,22 +1,41 @@
 version: '3.9'
 
 services:
-  webserver:
-    image: nginx:stable
+
+  mariadb:
+    image: mariadb:latest
     restart: always
-    ports:
-      - "8080:80"
-    volumes:
-      - ./nginx-dev:/etc/nginx/conf.d
-      - wordpress:/var/www/html
-  
+    environment:
+      - MYSQL_DATABASE=wpdocker
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=12345
+      - MYSQL_ROOT_PASSWORD=root
+    volumes: 
+      - ./mariadb:/var/lib/mysql
   wordpress:
+    depends_on: 
+      - mariadb
+    links: 
+      - mariadb
     image: wordpress:5.9.1-php8.1-fpm
     restart: always
+    environment:
+      - WORDPRESS_DB_HOST=mariadb
+      - WORDPRESS_DB_USER=user
+      - WORDPRESS_DB_PASSWORD=12345
+      - WORDPRESS_DB_NAME=wpdocker
     ports:
       - "9000:9000"
     volumes:
       - wordpress:/var/www/html
-
+  nginx:
+    image: nginx:stable
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx-dev:/etc/nginx/conf.d
+      - wordpress:/var/www/html
 volumes:
   wordpress:
+  mariadb:
