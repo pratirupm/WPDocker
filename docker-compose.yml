@@ -11,7 +11,8 @@ services:
       - MYSQL_PASSWORD=12345
       - MYSQL_ROOT_PASSWORD=root
     volumes: 
-      - ./mariadb:/var/lib/mysql
+      - mariadb:/var/lib/mysql
+
   wordpress:
     depends_on: 
       - mariadb
@@ -28,6 +29,7 @@ services:
       - "9000:9000"
     volumes:
       - wordpress:/var/www/html
+      - ./contents:/var/www/html/wp-content
   nginx:
     image: nginx:stable
     restart: always
@@ -36,6 +38,22 @@ services:
     volumes:
       - ./nginx-dev:/etc/nginx/conf.d
       - wordpress:/var/www/html
+
+  wpcli:
+    image: wordpress:cli
+    volumes_from:
+      - wordpress
+    links:
+      - mariadb
+    environment:
+      - WORDPRESS_DB_HOST=mariadb
+      - WORDPRESS_DB_USER=user
+      - WORDPRESS_DB_PASSWORD=12345
+      - WORDPRESS_DB_NAME=wpdocker
+    volumes:
+      - wordpress:/var/www/html
+    entrypoint: wp
+    command: "--info"
 volumes:
   wordpress:
   mariadb:
