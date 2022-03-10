@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  webserver:
+    image: nginx:stable
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx-dev:/etc/nginx/conf.d
+      - wordpress:/var/www/html
+      - ./ssl:/etc/ssl
