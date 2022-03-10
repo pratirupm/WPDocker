@@ -30,6 +30,7 @@ services:
     volumes:
       - wordpress:/var/www/html
       - ./contents:/var/www/html/wp-content
+
   nginx:
     image: nginx:stable
     restart: always
@@ -44,17 +45,18 @@ services:
     image: wordpress:cli
     volumes_from:
       - wordpress
+      - mariadb
     links:
       - mariadb
+      - wordpress
     environment:
       - WORDPRESS_DB_HOST=mariadb
       - WORDPRESS_DB_USER=user
       - WORDPRESS_DB_PASSWORD=12345
       - WORDPRESS_DB_NAME=wpdocker
-    volumes:
-      - wordpress:/var/www/html
     entrypoint: wp
     command: "--info"
+
 volumes:
   wordpress:
   mariadb:

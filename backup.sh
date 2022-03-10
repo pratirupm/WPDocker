@@ -1,2 +1,2 @@
 #!/bin/sh
-docker-compose run --rm wpcli db export ./wp-content/backup.sql
+docker compose run --user 33:33 --rm wpcli db export ./wp-content/backup.sql
