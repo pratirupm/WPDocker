@@ -10,4 +10,5 @@ services:
     volumes:
       - ./nginx-conf:/etc/nginx/conf.d
       - wordpress:/var/www/html
+      - ./contents:/var/www/html/wp-content
       - ./ssl:/etc/ssl

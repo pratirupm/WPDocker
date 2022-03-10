@@ -38,6 +38,7 @@ services:
     volumes:
       - ./nginx-dev:/etc/nginx/conf.d
       - wordpress:/var/www/html
+      - ./contents:/var/www/html/wp-content
 
   wpcli:
     image: wordpress:cli
