@@ -3,5 +3,3 @@ ssl/*
 !ssl/.gitkeep
 wordpress/*
 !wordpress/wp-content/
-mariadb/*
-!mariadb/wpdocker/
