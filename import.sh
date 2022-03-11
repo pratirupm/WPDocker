@@ -6,3 +6,4 @@ if [ -f "$FILE" ]; then
 else 
     echo "$FILE does not exist."
 fi
+

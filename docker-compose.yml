@@ -18,30 +18,29 @@ services:
       - mariadb
     links: 
       - mariadb
-    image: wordpress:5.9.1-php7.4-fpm
+    image: wordpress:5.9.1-php8.0-fpm-alpine
     restart: always
     environment:
-      - WORDPRESS_DB_HOST=mariadb
-      - WORDPRESS_DB_USER=user
-      - WORDPRESS_DB_PASSWORD=12345
-      - WORDPRESS_DB_NAME=wpdocker
-      - WORDPRESS_DEBUG=true
+      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_USER: user
+      WORDPRESS_DB_PASSWORD: 12345
+      WORDPRESS_DB_NAME: wpdocker
+      WORDPRESS_DEBUG: true
     ports:
       - "9000:9000"
     volumes:
+      - ./contents:/var/www/html/wp-content:Z
       - wordpress:/var/www/html
-      - ./contents:/var/www/html/wp-content
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
-
   nginx:
-    image: nginx:stable
+    image: nginx:stable-alpine
     restart: always
     ports:
       - "80:80"
     volumes:
       - ./nginx-dev:/etc/nginx/conf.d
+      - ./contents:/var/www/html/wp-content:z
       - wordpress:/var/www/html
-      - ./contents:/var/www/html/wp-content
 
   wpcli:
     image: wordpress:cli
@@ -58,7 +57,6 @@ services:
       - WORDPRESS_DB_NAME=wpdocker
     volumes:
       - wordpress:/var/www/html
-      - ./contents:/var/www/html/wp-content
 
 volumes:
   wordpress:
