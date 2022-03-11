@@ -18,7 +18,7 @@ services:
       - mariadb
     links: 
       - mariadb
-    image: wordpress:5.9.1-php8.0-fpm-alpine
+    image: wordpress:php8.0-fpm-alpine
     restart: always
     environment:
       WORDPRESS_DB_HOST: mariadb
@@ -28,7 +28,6 @@ services:
       WORDPRESS_DEBUG: true
     volumes:
       - ./wordpress:/var/www/html:delegated
-      - ./wp-content:/var/www/html/wp-content:delegated
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini:delegated
   nginx:
     image: nginx:stable-alpine
@@ -38,4 +37,3 @@ services:
     volumes:
       - ./nginx-dev:/etc/nginx/conf.d:delegated
       - ./wordpress:/var/www/html:delegated
-      - ./wp-content:/var/www/html/wp-content:delegated
