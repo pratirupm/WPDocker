@@ -1,0 +1,4 @@
+.env
+ssl/*
+wordpress/*
+!wordpress/wp-content/
