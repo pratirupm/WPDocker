@@ -28,6 +28,7 @@ services:
       WORDPRESS_DEBUG: true
     volumes:
       - ./wordpress:/var/www/html:delegated
+      - ./wp-content:/var/www/html/wp-content:delegated
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini:delegated
   nginx:
     image: nginx:stable-alpine
@@ -37,3 +38,4 @@ services:
     volumes:
       - ./nginx-dev:/etc/nginx/conf.d:delegated
       - ./wordpress:/var/www/html:delegated
+      - ./wp-content:/var/www/html/wp-content:delegated
