@@ -1,4 +1,5 @@
 .env
 ssl/*
+!ssl/.gitkeep
 wordpress/*
 !wordpress/wp-content/
