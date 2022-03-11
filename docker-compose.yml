@@ -11,23 +11,22 @@ services:
       - MYSQL_PASSWORD=12345
       - MYSQL_ROOT_PASSWORD=root
     volumes: 
-      - ./mariadb:/var/lib/mysql
+      - ./db:/var/lib/mysql
 
   wordpress:
     depends_on: 
       - mariadb
     links: 
       - mariadb
-    image: wordpress:php8.0-fpm-alpine
+    image: wordpress:5-php8.1-fpm-alpine
     restart: always
     environment:
       WORDPRESS_DB_HOST: mariadb
       WORDPRESS_DB_USER: user
       WORDPRESS_DB_PASSWORD: 12345
       WORDPRESS_DB_NAME: wpdocker
-      WORDPRESS_DEBUG: true
     volumes:
-      - ./wordpress:/var/www/html:delegated
+      - ./html:/var/www/html:delegated
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini:delegated
   nginx:
     image: nginx:stable-alpine
@@ -36,4 +35,4 @@ services:
       - "80:80"
     volumes:
       - ./nginx-dev:/etc/nginx/conf.d:delegated
-      - ./wordpress:/var/www/html:delegated
+      - ./html:/var/www/html:delegated
